@@ -1,0 +1,5 @@
+apiVersion: v2
+name: counter-dhl
+description: Example Package for DHL Training
+type: application
+version: 0.1.0

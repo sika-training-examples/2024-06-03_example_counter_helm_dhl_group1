@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Release.Name }}-counter-config
+data:
+  # Backend
+  REDIS: {{ .Release.Name }}-redis
+  EXTRA_TEXT: {{ .Values.EXTRA_TEXT }}
+
+  # Frontend
+  API_ORIGIN: http://{{ .Release.Name }}-backend
+  FONT_COLOR: {{ .Values.FONT_COLOR | quote }}
+  BACKGROUND_COLOR: {{ .Values.BACKGROUND_COLOR | quote }}

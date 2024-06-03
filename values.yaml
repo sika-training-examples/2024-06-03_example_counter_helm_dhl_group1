@@ -1,0 +1,10 @@
+# Required
+host:
+
+# Optional
+EXTRA_TEXT: 'DHL'
+FONT_COLOR: '#D40511'
+BACKGROUND_COLOR: '#FFCC00'
+
+backendReplicas: 2
+frontendReplicas: 2

@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-backend
+spec:
+  replicas: {{ .Values.backendReplicas }}
+  selector:
+    matchLabels:
+      app: {{ .Release.Name }}-backend
+  template:
+    metadata:
+      labels:
+        app: {{ .Release.Name }}-backend
+      annotations:
+        checksum/{{ .Release.Name }}-counter-config: {{include (print $.Template.BasePath "/config.yml") . | sha256sum}}
+    spec:
+      containers:
+        - name: main
+          image: ondrejsika/counter
+          ports:
+            - containerPort: 80
+          envFrom:
+            - configMapRef:
+                name: {{ .Release.Name }}-counter-config
+          startupProbe:
+            httpGet:
+              path: /readyz
+              port: 80
+          livenessProbe:
+            httpGet:
+              path: /livez
+              port: 80
+          resources:
+            requests:
+              cpu: 20m
+              memory: 20Mi
+            limits:
+              cpu: 100m
+              memory: 40Mi
